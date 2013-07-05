@@ -3,6 +3,7 @@ package org.igorb.javabrains;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +16,14 @@ public class XmlServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		String username = request.getParameter("userName");
 		HttpSession session = request.getSession();
+		ServletContext context = request.getServletContext();
 		if (username !="" && username !=null) {
 			session.setAttribute("savedUserName", username );
+			context.setAttribute("savedUserName", username );
 		}
 		out.println("Hello User!!"+ username);
 		out.println("Sesion Hello User!!"+ (String) session.getAttribute("savedUserName"));
+		out.println("Context Hello User!!"+ (String) context.getAttribute("savedUserName"));
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

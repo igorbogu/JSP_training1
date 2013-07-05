@@ -7,19 +7,26 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class XmlServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String username = request.getParameter("userName");
+		HttpSession session = request.getSession();
+		if (username !="" && username !=null) {
+			session.setAttribute("savedUserName", username );
+		}
 		out.println("Hello User!!"+ username);
+		out.println("Sesion Hello User!!"+ (String) session.getAttribute("savedUserName"));
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		String username = request.getParameter("userName");
+
 		String fullname = request.getParameter("fullName");
 		String prof = request.getParameter("prof");
 		//String location = request.getParameter("location");
